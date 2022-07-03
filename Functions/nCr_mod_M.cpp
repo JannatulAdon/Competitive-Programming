@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+long long fact[10000009];
+void precal(int n, int M)
+{
+    fact[0] = 1;
+    for (int i = 1; i <= n; i++)
+        fact[i] = (fact[i - 1] * i) % M;
+}
+long long powermod(long long a, long long b, long long M)
+{
+    if (b == 0)
+        return 1LL;
+    if (b == 1)
+        return a % M;
+    long long ans = 1;
+    while (b)
+    {
+        if (b % 2 == 1)
+            ans = (((ans % M) * (a % M)) % M);
+        a = (((a % M) * (a % M)) % M);
+        b /= 2;
+    }
+    return ans;
+}
+long long NCR(int n, int r, int M)
+{
+    return fact[n] * powermod(fact[r] * fact[n - r] % M, M - 2, M) % M;
+}
+
+int main()
+{
+    precal(10000000, 1000000007);
+}
